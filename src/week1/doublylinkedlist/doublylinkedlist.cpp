@@ -1,14 +1,18 @@
 #include <iostream>
+#include <stdexcept>
+
 using namespace std;
 
 class Node {
 public:
     int Value;
     Node* Next;
+    Node* Prev;
 
     Node(int value) {
         Value = value;
         Next = nullptr;
+        Prev = nullptr;
     }
 
     void setNext(Node* next) {
@@ -24,12 +28,12 @@ public:
     }
 };
 
-class LinkedList {
+class doublyLinkedList {
 private:
     Node* first;
 
 public:
-    LinkedList() {
+    doublyLinkedList() {
         first = nullptr;
     }
 
@@ -43,6 +47,7 @@ public:
                 current = current->getNext();
             }
             current->setNext(newNode);
+            newNode->Prev = current;  // Mengatur Prev dari newNode
         }
     }
 
@@ -56,6 +61,7 @@ public:
 
         if (index == 0) {
             newNode->setNext(first);
+            first->Prev = newNode;  // Mengatur Prev dari first
             first = newNode;
             return;
         }
@@ -71,9 +77,12 @@ public:
         }
 
         newNode->setNext(current->getNext());
+        if (current->getNext()) {
+            current->getNext()->Prev = newNode;  // Mengatur Prev dari node setelah current
+        }
         current->setNext(newNode);
+        newNode->Prev = current;  // Mengatur Prev dari newNode
     }
-
 
     void remove(int index) {
         if (index < 0) {
@@ -85,6 +94,9 @@ public:
             if (first) {
                 Node* temp = first;
                 first = first->getNext();
+                if (first) {
+                    first->Prev = nullptr;  // Menghapus Prev dari first baru
+                }
                 delete temp;
                 return;
             }
@@ -102,6 +114,9 @@ public:
 
         Node* temp = current->getNext();
         current->setNext(temp->getNext());
+        if (temp->getNext()) {
+            temp->getNext()->Prev = current;  // Mengatur Prev dari node setelah temp
+        }
         delete temp;
     }
 
@@ -144,6 +159,7 @@ public:
         Node* temp = curr1->getNext();
         curr1->setNext(curr2->getNext());
         curr2->setNext(temp);
+
     }
 
     void printList() {
@@ -173,29 +189,90 @@ public:
 };
 
 int main() {
-    LinkedList list;
-    list.add(1);
-    list.add(2);
-    list.add(3);
+    doublyLinkedList list;
+    int menu;
+    while (true) {
+        cout << "Pilih Angka Menu yang Tersedia : \n"
+        "1.Add\n"
+        "2.Insert\n"
+        "3.Remove\n"
+        "4.Swap\n"
+        "5.Get Value\n"
+        "6.Selesai" << endl;
+        cin >> menu;
+        if (menu == 1) {
+            // add value
+            int value;
+            cout << "Masukkan nilai (0 untuk selesai): ";
+            cin >> value;
 
-    cout << "Linked List: ";
-    list.printList();
+            while (value != 0) {
+                list.add(value);
+                cout << "Masukkan nilai (0 untuk selesai): ";
+                cin >> value;
+            }
 
-    list.insert(3,1);
+            cout << "Linked List setelah menggunakan fungsi add: ";
+            list.printList();
+            cout << endl;
+        } else if (menu == 2) {
+            // insert value berdasarkan index
+            int value, index;
+            cout << "Masukkan nilai yang ingin disisipkan: ";
+            cin >> value;
 
-    cout << "Linked List: ";
-    list.printList();
+            cout << "Masukkan indeks di mana nilai akan disisipkan: ";
+            cin >> index;
 
-    list.remove(3);
+            list.insert(value, index);
 
-    cout << "Linked List: ";
-    list.printList();
+            cout << "Linked List setelah menggunakan fungsi insert: ";
+            list.printList();
+            cout << endl;
+        } else if (menu == 3) {
+            // remove value berdasarkan index
+            int index;
+            cout << "Masukkan indeks yang ingin dihapus: ";
+            cin >> index;
 
-    int cari;
-    cout << "Cari nilai : ";
-    cin >> cari;
+            list.remove(index);
 
-    int valueAtIndex = list.get(cari);
-    cout << "Nilai di index ke-" << list.get(cari) << " adalah : " << valueAtIndex << endl;
+            cout << "Linked List setelah menggunakan fungsi remove: ";
+            list.printList();
+            cout << endl;
+        } else if(menu == 4) {
+            // swap value berdasarkan index
+            int index1, index2;
+            cout << "Masukkan indeks pertama untuk penukaran: ";
+            cin >> index1;
+
+            cout << "Masukkan indeks kedua untuk penukaran: ";
+            cin >> index2;
+
+            list.swap(index1, index2);
+
+            cout << "Linked List setelah menggunakan fungsi remove: ";
+            list.printList();
+            cout << endl;
+        } else if (menu == 5) {
+            // get value berdasarkan input index
+            int index;
+            cout << "Masukkan indeks untuk mendapatkan nilai: ";
+            cin >> index;
+
+            try {
+                int value = list.get(index);
+                cout << "Nilai pada index " << index << ": " << value << std::endl;
+            } catch (const std::out_of_range& e) {
+                cerr << "Error: " << e.what() << endl;
+            }
+        } else if(menu == 6) {
+            break;
+        } else {
+            cout << "invalid input" << endl;
+        }
+
+    }
+
     return 0;
 }
