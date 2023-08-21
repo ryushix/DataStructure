@@ -27,22 +27,22 @@ public:
     }
 };
 
-class Queue {  // Mengubah nama kelas menjadi Queue
+class Queue {
 private:
-    Node* front;  // Mengganti nama dari top menjadi front
-    Node* rear;   // Menambahkan pointer rear
+    Node* front;
+    Node* rear;
 
 public:
     Queue() {
         front = nullptr;
-        rear = nullptr;  // Menginisialisasi rear dengan nullptr
+        rear = nullptr;
     }
 
     bool hasPop() {
-        return front != nullptr;  // Mengganti top dengan front
+        return front != nullptr;
     }
 
-    void push(int value) {
+    void enqueue(int value) {
         Node* newNode = new Node(value);
         if (rear == nullptr) {  // Jika antrian kosong, front dan rear sama
             front = newNode;
@@ -53,23 +53,25 @@ public:
         }
     }
 
-    int pop() {
+    int dequeue() {
         if (front == nullptr) {
             cerr << "Queue is empty." << endl;
             return -1;
         }
 
-        int poppedValue = front->getValue();
+        int dequeuedValue = front->getValue();
         Node* temp = front;
         front = front->getNext();
+        if (front == nullptr) {
+            rear = nullptr;
+        }
         delete temp;
-        return poppedValue;
+        return dequeuedValue;
     }
 
     void swap(int index1, int index2) {
-        // Count nodes to ensure valid indices
         int count = 0;
-        Node* current = front; // Menggunakan front sebagai titik awal perhitungan
+        Node* current = front;
         while (current != nullptr) {
             count++;
             current = current->getNext();
@@ -81,13 +83,12 @@ public:
         }
 
         if (index1 == index2) {
-            return; // No need to swap if indices are the same
+            return;
         }
 
-        // Find nodes at index1 and index2
         Node* prev1 = nullptr;
         Node* prev2 = nullptr;
-        Node* node1 = front; // Menggunakan front sebagai titik awal pencarian
+        Node* node1 = front;
         Node* node2 = front;
 
         for (int i = 0; i < count - index1 - 1; i++) {
@@ -103,13 +104,13 @@ public:
         if (prev1 != nullptr) {
             prev1->setNext(node2);
         } else {
-            front = node2; // Mengubah front jika node1 adalah front
+            front = node2;
         }
 
         if (prev2 != nullptr) {
             prev2->setNext(node1);
         } else {
-            front = node1; // Mengubah front jika node2 adalah front
+            front = node1;
         }
 
         Node* temp = node1->getNext();
@@ -128,20 +129,20 @@ public:
 };
 
 int main() {
-    Queue queue;  // Mengganti Stack dengan Queue
+    Queue queue;
 
     int menu;
     while (true) {
         cout << "Pilih Angka Menu yang Tersedia : \n"
         "1.hasPop\n"
-        "2.Push\n"
-        "3.Pop\n"
+        "2.Enqueue\n"
+        "3.Dequeue\n"
         "4.Swap\n"
         "5.Selesai" << endl;
         cin >> menu;
         if(menu == 1) {
             if (queue.hasPop()) {
-                queue.printQueue();  // Mengganti printStack dengan printQueue
+                queue.printQueue();
                 cout << "Queue memiliki elemen yang bisa di pop." << endl;
             } else {
                 cout << "Queue kosong." << endl;
@@ -152,17 +153,17 @@ int main() {
             cin >> value;
 
             while (value != 0) {
-                queue.push(value);
+                queue.enqueue(value);
                 cout << "Masukkan nilai (0 untuk selesai): ";
                 cin >> value;
             }
 
             cout << "Queue setelah menggunakan fungsi push: ";
-            queue.printQueue();  // Mengganti printStack dengan printQueue
+            queue.printQueue();
             cout << endl;
         } else if(menu == 3) {
-            queue.pop();
-            queue.printQueue();  // Mengganti printStack dengan printQueue
+            queue.dequeue();
+            queue.printQueue();
         } else if(menu == 4) {
             int value1;
             cout << "Masukkan indeks pertama untuk penukaran: ";
@@ -170,10 +171,10 @@ int main() {
             int value2;
             cout << "Masukkan indeks kedua untuk penukaran: ";
             cin >> value2;
-            queue.swap(value1, value2);  // Memanggil fungsi swap pada Queue
+            queue.swap(value1, value2);
 
             cout << "Queue setelah menggunakan fungsi swap: ";
-            queue.printQueue();  // Mengganti printStack dengan printQueue
+            queue.printQueue();
         } else if (menu == 5) {
             break;
         } else {
@@ -182,6 +183,3 @@ int main() {
     }
     return 0;
 }
-
-
-
