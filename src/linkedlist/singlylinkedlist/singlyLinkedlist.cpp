@@ -7,12 +7,11 @@ class Node {
 public:
     int Value;
     Node* Next;
-    Node* Prev;
 
+public:
     Node(int value) {
         Value = value;
         Next = nullptr;
-        Prev = nullptr;
     }
 
     void setNext(Node* next) {
@@ -28,12 +27,12 @@ public:
     }
 };
 
-class doublyLinkedList {
+class singlyLinkedList {
 private:
     Node* first;
 
 public:
-    doublyLinkedList() {
+    singlyLinkedList() {
         first = nullptr;
     }
 
@@ -47,7 +46,6 @@ public:
                 current = current->getNext();
             }
             current->setNext(newNode);
-            newNode->Prev = current;  // Mengatur Prev dari newNode
         }
     }
 
@@ -61,7 +59,6 @@ public:
 
         if (index == 0) {
             newNode->setNext(first);
-            first->Prev = newNode;  // Mengatur Prev dari first
             first = newNode;
             return;
         }
@@ -77,11 +74,7 @@ public:
         }
 
         newNode->setNext(current->getNext());
-        if (current->getNext()) {
-            current->getNext()->Prev = newNode;  // Mengatur Prev dari node setelah current
-        }
         current->setNext(newNode);
-        newNode->Prev = current;  // Mengatur Prev dari newNode
     }
 
     void remove(int index) {
@@ -94,9 +87,6 @@ public:
             if (first) {
                 Node* temp = first;
                 first = first->getNext();
-                if (first) {
-                    first->Prev = nullptr;  // Menghapus Prev dari first baru
-                }
                 delete temp;
                 return;
             }
@@ -114,9 +104,6 @@ public:
 
         Node* temp = current->getNext();
         current->setNext(temp->getNext());
-        if (temp->getNext()) {
-            temp->getNext()->Prev = current;  // Mengatur Prev dari node setelah temp
-        }
         delete temp;
     }
 
@@ -189,7 +176,7 @@ public:
 };
 
 int main() {
-    doublyLinkedList list;
+    singlyLinkedList list;
     int menu;
     while (true) {
         cout << "Pilih Angka Menu yang Tersedia : \n"
@@ -262,8 +249,8 @@ int main() {
 
             try {
                 int value = list.get(index);
-                cout << "Nilai pada index " << index << ": " << value << std::endl;
-            } catch (const std::out_of_range& e) {
+                cout << "Nilai pada index " << index << ": " << value << endl;
+            } catch (const out_of_range& e) {
                 cerr << "Error: " << e.what() << endl;
             }
         } else if(menu == 6) {
