@@ -147,6 +147,7 @@ int main() {
             } else {
                 cout << "Queue kosong." << endl;
             }
+            cout << endl;
         } else if(menu == 2) {
             int value;
             cout << "Masukkan nilai (0 untuk selesai): ";
@@ -158,12 +159,15 @@ int main() {
                 cin >> value;
             }
 
-            cout << "Queue setelah menggunakan fungsi push: ";
+            cout << "Queue setelah menggunakan fungsi enqueue: ";
             queue.printQueue();
             cout << endl;
         } else if(menu == 3) {
             queue.dequeue();
+
+            cout << "Queue setelah menggunakan fungsi dequeue: ";
             queue.printQueue();
+            cout << endl;
         } else if(menu == 4) {
             int value1;
             cout << "Masukkan indeks pertama untuk penukaran: ";
@@ -175,6 +179,7 @@ int main() {
 
             cout << "Queue setelah menggunakan fungsi swap: ";
             queue.printQueue();
+            cout << endl;
         } else if (menu == 5) {
             break;
         } else {

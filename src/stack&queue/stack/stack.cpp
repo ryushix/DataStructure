@@ -49,7 +49,7 @@ public:
     int pop() {
         if (top == nullptr) {
             cerr << "Stack is empty." << endl;
-            return -1; // You can choose to throw an exception here instead
+            return -1;
         }
 
         int poppedValue = top->getValue();
@@ -60,7 +60,6 @@ public:
     }
 
     void swap(int index1, int index2) {
-        // Count nodes to ensure valid indices
         int count = 0;
         Node* current = top;
         while (current != nullptr) {
@@ -74,10 +73,9 @@ public:
         }
 
         if (index1 == index2) {
-            return; // No need to swap if indices are the same
+            return;
         }
 
-        // Find nodes at index1 and index2
         Node* prev1 = nullptr;
         Node* prev2 = nullptr;
         Node* node1 = top;
@@ -156,7 +154,10 @@ int main() {
             cout << endl;
         } else if(menu == 3) {
             stack.pop();
+
+            cout << "Stack setelah menggunakan fungsi pop: ";
             stack.printStack();
+            cout << endl;
         } else if(menu == 4) {
             int value1;
             cout << "Masukkan indeks pertama untuk penukaran: ";
@@ -164,9 +165,11 @@ int main() {
             int value2;
             cout << "Masukkan indeks kedua untuk penukaran: ";
             cin >> value2;
-
             stack.swap(value1, value2);
+
+            cout << "Stack setelah menggunakan fungsi swap: ";
             stack.printStack();
+            cout << endl;
         } else if (menu == 5) {
             break;
         } else {
