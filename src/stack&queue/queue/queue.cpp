@@ -147,7 +147,6 @@ int main() {
             } else {
                 cout << "Queue kosong." << endl;
             }
-            cout << endl;
         } else if(menu == 2) {
             int value;
             cout << "Masukkan nilai (0 untuk selesai): ";
@@ -163,9 +162,28 @@ int main() {
             queue.printQueue();
             cout << endl;
         } else if(menu == 3) {
-            queue.dequeue();
+            int tmp = queue.dequeue();
+            cout << "Angka yang dikeluarkan ialah: " << tmp << endl;
+            cout << "Stack setelah menggunakan fungsi pop: ";
+            queue.printQueue();
 
-            cout << "Queue setelah menggunakan fungsi dequeue: ";
+            int menu;
+            while (true) {
+                cout << "Pilih Angka Menu yang Tersedia : \n"
+                "1.Undo\n";
+                "2.Seleasi" << endl;
+                cin >> menu;
+                if (menu == 1) {
+                    queue.enqueue(tmp);
+                    cout << "Setelah undo: ";
+                    queue.printQueue();
+                    break;
+                } else if(menu == 2) {
+                    break;
+                } else {
+                    cout << "invalid input: masukkan menu yang tersedia" << endl;
+                }
+            }
             queue.printQueue();
             cout << endl;
         } else if(menu == 4) {
@@ -179,7 +197,6 @@ int main() {
 
             cout << "Queue setelah menggunakan fungsi swap: ";
             queue.printQueue();
-            cout << endl;
         } else if (menu == 5) {
             break;
         } else {

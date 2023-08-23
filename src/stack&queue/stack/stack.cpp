@@ -153,9 +153,27 @@ int main() {
             stack.printStack();
             cout << endl;
         } else if(menu == 3) {
-            stack.pop();
-
+            int tmp = stack.pop();
+            cout << "Angka yang dikeluarkan ialah: " << tmp << endl;
             cout << "Stack setelah menggunakan fungsi pop: ";
+            stack.printStack();
+            int menu;
+            while (true) {
+                cout << "Pilih Angka Menu yang Tersedia : \n"
+                "1.Undo\n";
+                "2.Seleasi" << endl;
+                cin >> menu;
+                if (menu == 1) {
+                    stack.push(tmp);
+                    cout << "Setelah undo: ";
+                    stack.printStack();
+                    break;
+                } else if(menu == 2) {
+                    break;
+                } else {
+                    cout << "invalid input: masukkan menu yang tersedia" << endl;
+                }
+            }
             stack.printStack();
             cout << endl;
         } else if(menu == 4) {
