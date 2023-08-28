@@ -179,12 +179,14 @@ public:
                 current->setNext(traverse->getNext());
                 traverse->setNext(current);
             }
+            cout << "Linked List saat ini: ";
+            printList();
+            cout << endl;
+
             current = next;
         }
         first = sorted;
     }
-
-
 
     int get(int index) {
         Node* current = first;
@@ -294,8 +296,6 @@ int main() {
             }
         } else if(menu == 6) {
             list.insertionSort();
-            cout << "Linked List setelah menggunakan selection sort: ";
-            list.printList();
             cout << endl;
         } else if (menu == 7) {
             break;

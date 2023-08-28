@@ -169,8 +169,8 @@ public:
                     int temp = current->getValue();
                     current->Value = nextNode->getValue();
                     nextNode->Value = temp;
-                }
 
+                }
                 current = current->getNext();
                 nextNode = nextNode->getNext();
             }
@@ -286,8 +286,6 @@ int main() {
             }
         } else if(menu == 6) {
             list.bubbleSort();
-            cout << "Linked List setelah menggunakan bubble sort: ";
-            list.printList();
             cout << endl;
         } else if (menu == 7) {
             break;

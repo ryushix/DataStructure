@@ -172,6 +172,10 @@ public:
             int temp = i->getValue();
             i->Value = minNode->getValue();
             minNode->Value = temp;
+
+            cout << "Linked List saat ini: ";
+            printList();
+            cout << endl;
         }
     }
 
@@ -284,8 +288,6 @@ int main() {
             }
         } else if(menu == 6) {
             list.selectionSort();
-            cout << "Linked List setelah menggunakan selection sort: ";
-            list.printList();
             cout << endl;
         } else if (menu == 7) {
             break;
