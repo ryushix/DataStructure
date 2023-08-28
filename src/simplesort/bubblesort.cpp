@@ -158,6 +158,25 @@ public:
         cout << endl;
     }
 
+    void bubbleSort() {
+        int len = length();
+        for (int i = 0; i < len - 1; i++) {
+            Node* current = first;
+            Node* nextNode = first->getNext();
+
+            for (int j = 0; j < len - i - 1; j++) {
+                if (current->getValue() > nextNode->getValue()) {
+                    int temp = current->getValue();
+                    current->Value = nextNode->getValue();
+                    nextNode->Value = temp;
+                }
+
+                current = current->getNext();
+                nextNode = nextNode->getNext();
+            }
+        }
+    }
+
     int get(int index) {
         Node* current = first;
         int currentIndex = 0;
@@ -181,25 +200,6 @@ public:
             current = current->getNext();
         }
         return count;
-    }
-
-    void bubbleSort() {
-        int len = length();
-        for (int i = 0; i < len - 1; i++) {
-            Node* current = first;
-            Node* nextNode = first->getNext();
-
-            for (int j = 0; j < len - i - 1; j++) {
-                if (current->getValue() > nextNode->getValue()) {
-                    int temp = current->getValue();
-                    current->Value = nextNode->getValue();
-                    nextNode->Value = temp;
-                }
-
-                current = current->getNext();
-                nextNode = nextNode->getNext();
-            }
-        }
     }
 
 

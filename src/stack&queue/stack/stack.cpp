@@ -157,6 +157,7 @@ int main() {
             cout << "Angka yang dikeluarkan ialah: " << tmp << endl;
             cout << "Stack setelah menggunakan fungsi pop: ";
             stack.printStack();
+
             int menu;
             while (true) {
                 cout << "Pilih Angka Menu yang Tersedia : \n"

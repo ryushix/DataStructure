@@ -158,6 +158,24 @@ public:
         cout << endl;
     }
 
+    void selectionSort() {
+        int len = length();
+        for (Node* i = first; i != nullptr; i = i->getNext()) {
+            Node* minNode = i;
+
+            for (Node* j = i->getNext(); j != nullptr; j = j->getNext()) {
+                if (j->getValue() < minNode->getValue()) {
+                    minNode = j;
+                }
+            }
+
+            int temp = i->getValue();
+            i->Value = minNode->getValue();
+            minNode->Value = temp;
+        }
+    }
+
+
     int get(int index) {
         Node* current = first;
         int currentIndex = 0;
@@ -183,26 +201,6 @@ public:
         return count;
     }
 
-    void bubbleSort() {
-        int len = length();
-        for (int i = 0; i < len - 1; i++) {
-            Node* current = first;
-            Node* nextNode = first->getNext();
-
-            for (int j = 0; j < len - i - 1; j++) {
-                if (current->getValue() > nextNode->getValue()) {
-                    int temp = current->getValue();
-                    current->Value = nextNode->getValue();
-                    nextNode->Value = temp;
-                }
-
-                current = current->getNext();
-                nextNode = nextNode->getNext();
-            }
-        }
-    }
-
-
 };
 
 int main() {
@@ -215,7 +213,7 @@ int main() {
         "3.Remove\n"
         "4.Swap\n"
         "5.Get Value\n"
-        "6.Bubble Sort\n"
+        "6.Selection Sort\n"
         "7.Selesai" << endl;
         cin >> menu;
         if (menu == 1) {
@@ -285,8 +283,8 @@ int main() {
                 cerr << "Error: " << e.what() << endl;
             }
         } else if(menu == 6) {
-            list.bubbleSort();
-            cout << "Linked List setelah menggunakan bubble sort: ";
+            list.selectionSort();
+            cout << "Linked List setelah menggunakan selection sort: ";
             list.printList();
             cout << endl;
         } else if (menu == 7) {

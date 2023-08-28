@@ -158,6 +158,34 @@ public:
         cout << endl;
     }
 
+    void insertionSort() {
+        if (!first || !first->getNext()) {
+            return;
+        }
+
+        Node* sorted = nullptr;
+        Node* current = first;
+
+        while (current != nullptr) {
+            Node* next = current->getNext();
+            if (!sorted || sorted->getValue() >= current->getValue()) {
+                current->setNext(sorted);
+                sorted = current;
+            } else {
+                Node* traverse = sorted;
+                while (traverse->getNext() != nullptr && traverse->getNext()->getValue() < current->getValue()) {
+                    traverse = traverse->getNext();
+                }
+                current->setNext(traverse->getNext());
+                traverse->setNext(current);
+            }
+            current = next;
+        }
+        first = sorted;
+    }
+
+
+
     int get(int index) {
         Node* current = first;
         int currentIndex = 0;
@@ -183,26 +211,6 @@ public:
         return count;
     }
 
-    void bubbleSort() {
-        int len = length();
-        for (int i = 0; i < len - 1; i++) {
-            Node* current = first;
-            Node* nextNode = first->getNext();
-
-            for (int j = 0; j < len - i - 1; j++) {
-                if (current->getValue() > nextNode->getValue()) {
-                    int temp = current->getValue();
-                    current->Value = nextNode->getValue();
-                    nextNode->Value = temp;
-                }
-
-                current = current->getNext();
-                nextNode = nextNode->getNext();
-            }
-        }
-    }
-
-
 };
 
 int main() {
@@ -215,7 +223,7 @@ int main() {
         "3.Remove\n"
         "4.Swap\n"
         "5.Get Value\n"
-        "6.Bubble Sort\n"
+        "6.Insertion Sort\n"
         "7.Selesai" << endl;
         cin >> menu;
         if (menu == 1) {
@@ -285,8 +293,8 @@ int main() {
                 cerr << "Error: " << e.what() << endl;
             }
         } else if(menu == 6) {
-            list.bubbleSort();
-            cout << "Linked List setelah menggunakan bubble sort: ";
+            list.insertionSort();
+            cout << "Linked List setelah menggunakan selection sort: ";
             list.printList();
             cout << endl;
         } else if (menu == 7) {
