@@ -159,7 +159,6 @@ public:
     }
 
     void selectionSort() {
-        int len = length();
         for (Node* i = first; i != nullptr; i = i->getNext()) {
             Node* minNode = i;
 
