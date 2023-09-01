@@ -318,7 +318,7 @@ int main() {
             duration<double> timeElapsed = duration_cast<duration<double>>(endTime - startTime);
 
             list.printList();
-            cout << "Waktu yang diperlukan untuk Insertion Sort: " << timeElapsed.count() << " detik" << endl;
+            cout << "Waktu yang diperlukan untuk Selection Sort: " << timeElapsed.count() << " detik" << endl;
             cout << endl;
         } else if (menu == 8) {
             break;
