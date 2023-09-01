@@ -1,7 +1,11 @@
 #include <iostream>
 #include <stdexcept>
+#include <cstdlib>
+#include <ctime>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 class Node {
 public:
@@ -172,9 +176,6 @@ public:
             i->Value = minNode->getValue();
             minNode->Value = temp;
 
-            cout << "Linked List saat ini: ";
-            printList();
-            cout << endl;
         }
     }
 
@@ -206,7 +207,19 @@ public:
 
 };
 
+class RandomLinkedListGenerator {
+public:
+    static void generateRandomValues(singlyLinkedList& list, int n) {
+        srand(time(0));  // Inisialisasi seed acak berdasarkan waktu
+        for (int i = 0; i < n; i++) {
+            int randomValue = 1 + rand() % 1000; // Nilai acak antara 1 dan 1000
+            list.add(randomValue);
+        }
+    }
+};
+
 int main() {
+    RandomLinkedListGenerator random;
     singlyLinkedList list;
     int menu;
     while (true) {
@@ -216,8 +229,9 @@ int main() {
         "3.Remove\n"
         "4.Swap\n"
         "5.Get Value\n"
-        "6.Selection Sort\n"
-        "7.Selesai" << endl;
+        "6.Generate Value\n"
+        "7.Selection Sort\n"
+        "8.Selesai" << endl;
         cin >> menu;
         if (menu == 1) {
             // add value
@@ -285,10 +299,28 @@ int main() {
             } catch (const out_of_range& e) {
                 cerr << "Error: " << e.what() << endl;
             }
-        } else if(menu == 6) {
-            list.selectionSort();
+        } else if (menu == 6) {
+            // generate random value
+            int numValues;
+            cout << "Masukkan banyak nilai acak yang ingin di-generate: ";
+            cin >> numValues;
+
+            random.generateRandomValues(list, numValues);
+
+            cout << "Linked List setelah menggunakan fungsi generateRandomValues: ";
+            list.printList();
             cout << endl;
-        } else if (menu == 7) {
+        } else if(menu == 7) {
+            // Selection sort dan waktu lamanya eksekusi
+            high_resolution_clock::time_point startTime = high_resolution_clock::now();
+            list.selectionSort();
+            high_resolution_clock::time_point endTime = high_resolution_clock::now();
+            duration<double> timeElapsed = duration_cast<duration<double>>(endTime - startTime);
+
+            list.printList();
+            cout << "Waktu yang diperlukan untuk Insertion Sort: " << timeElapsed.count() << " detik" << endl;
+            cout << endl;
+        } else if (menu == 8) {
             break;
         } else {
             cout << "invalid input" << endl;
