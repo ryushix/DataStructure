@@ -219,8 +219,8 @@ public:
 };
 
 int main() {
-    RandomLinkedListGenerator random;
     singlyLinkedList list;
+    RandomLinkedListGenerator random;
     int menu;
     while (true) {
         cout << "Pilih Angka Menu yang Tersedia : \n"
