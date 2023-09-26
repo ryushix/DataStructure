@@ -207,7 +207,7 @@ public:
 
 };
 
-class RandomLinkedListGenerator {
+class LinkedListGenerator {
 public:
     static void generateRandomValues(singlyLinkedList& list, int n) {
         srand(time(0));  // Inisialisasi seed acak berdasarkan waktu
@@ -216,11 +216,17 @@ public:
             list.add(randomValue);
         }
     }
+
+    static void generateReversedValues(singlyLinkedList& list, int n) {
+        for (int i = n; i >= 1; i--) {
+            list.add(i);
+        }
+    }
 };
 
 int main() {
     singlyLinkedList list;
-    RandomLinkedListGenerator random;
+    LinkedListGenerator random, nearlySorted, reversedValue;;
     int menu;
     while (true) {
         cout << "Pilih Angka Menu yang Tersedia : \n"
@@ -300,16 +306,43 @@ int main() {
                 cerr << "Error: " << e.what() << endl;
             }
         } else if (menu == 6) {
-            // generate random value
-            int numValues;
-            cout << "Masukkan banyak nilai acak yang ingin di-generate: ";
-            cin >> numValues;
+            int generator;
+            while (true) {
+                cout << "Pilih Generator yang ingin digunakan : \n"
+                "1.Random\n"
+                "2.Reversed\n"
+                "3.Keluar" << endl;
+                cin >> generator;
+                if (generator == 1) {
+                    // generate random value
+                    int numValues;
+                    cout << "Masukkan banyak nilai acak yang ingin di-generate: ";
+                    cin >> numValues;
 
-            random.generateRandomValues(list, numValues);
+                    random.generateRandomValues(list, numValues);
 
-            cout << "Linked List setelah menggunakan fungsi generateRandomValues: ";
-            list.printList();
-            cout << endl;
+                    cout << "Linked List setelah menggunakan fungsi generateRandomValues: ";
+                    list.printList();
+                    cout << endl;
+                    break;
+                } else if (generator == 2) {
+                    // generate reversed values
+                    int numValues;
+                    cout << "Masukkan banyak nilai terurut terbalik yang ingin di-generate: ";
+                    cin >> numValues;
+
+                    reversedValue.generateReversedValues(list, numValues);
+
+                    cout << "Linked List setelah menggunakan fungsi generateReversedValues: ";
+                    list.printList();
+                    cout << endl;
+                    break;
+                } else if (generator == 3) {
+                    break;
+                } else {
+                    cout << "invalid input" << endl;
+                }
+            }
         } else if(menu == 7) {
             // Selection sort dan waktu lamanya eksekusi
             high_resolution_clock::time_point startTime = high_resolution_clock::now();
