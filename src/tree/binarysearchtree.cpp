@@ -165,6 +165,45 @@ public:
         }
     }
 
+    void printInorder(Node* node) {
+        if (node != nullptr) {
+            printInorder(node->Left);
+            cout << node->Key << " ";
+            printInorder(node->Right);
+        }
+    }
+
+    void printPreorder(Node* node) {
+        if (node != nullptr) {
+            cout << node->Key << " ";
+            printPreorder(node->Left);
+            printPreorder(node->Right);
+        }
+    }
+
+    void printPostorder(Node* node) {
+        if (node != nullptr) {
+            printPostorder(node->Left);
+            printPostorder(node->Right);
+            cout << node->Key << " ";
+        }
+    }
+
+    void printInorder() {
+        printInorder(root);
+        cout << endl;
+    }
+
+    void printPreorder() {
+        printPreorder(root);
+        cout << endl;
+    }
+
+    void printPostorder() {
+        printPostorder(root);
+        cout << endl;
+    }
+
 };
 
 int main() {
@@ -176,7 +215,10 @@ int main() {
         cout << "1. Tambahkan kunci" << endl;
         cout << "2. Hapus kunci" << endl;
         cout << "3. Cek keberadaan kunci" << endl;
-        cout << "4. Keluar" << endl;
+        cout << "4. Print preOrder" << endl;
+        cout << "5. Print inOrder" << endl;
+        cout << "6. Print postOrder" << endl;
+        cout << "7. Selesai" << endl;
         cout << "Pilihan: ";
         cin >> menu;
 
@@ -207,6 +249,18 @@ int main() {
                 }
                 break;
             case 4:
+                cout << "Preorder Traversal: ";
+                bst.printPreorder();
+                break;
+            case 5:
+                cout << "Inorder Traversal: ";
+                bst.printInorder();
+                break;
+            case 6:
+                cout << "Postorder Traversal: ";
+                bst.printPostorder();
+                break;
+            case 7:
                 cout << "Terima kasih, keluar dari program." << endl;
                 return 0;
             default:
