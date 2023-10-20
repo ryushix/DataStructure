@@ -165,19 +165,19 @@ public:
         }
     }
 
-    void printInorder(Node* node) {
-        if (node != nullptr) {
-            printInorder(node->Left);
-            cout << node->Key << " ";
-            printInorder(node->Right);
-        }
-    }
-
     void printPreorder(Node* node) {
         if (node != nullptr) {
             cout << node->Key << " ";
             printPreorder(node->Left);
             printPreorder(node->Right);
+        }
+    }
+
+    void printInorder(Node* node) {
+        if (node != nullptr) {
+            printInorder(node->Left);
+            cout << node->Key << " ";
+            printInorder(node->Right);
         }
     }
 
@@ -189,13 +189,13 @@ public:
         }
     }
 
-    void printInorder() {
-        printInorder(root);
+    void printPreorder() {
+        printPreorder(root);
         cout << endl;
     }
 
-    void printPreorder() {
-        printPreorder(root);
+    void printInorder() {
+        printInorder(root);
         cout << endl;
     }
 
