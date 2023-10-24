@@ -16,6 +16,10 @@ public:
         Left = nullptr;
     }
 
+    int getKey() {
+        return Key;
+    }
+
     void setRight(Node* right) {
         Right = right;
     }
@@ -30,14 +34,6 @@ public:
 
     Node* getLeft() {
         return Left;
-    }
-
-    int getKey() {
-        return Key;
-    }
-
-    Node* getRoot() {
-        return this;
     }
 };
 
@@ -138,10 +134,6 @@ public:
             current = current->getLeft();
         }
         return current;
-    }
-
-    Node* getRoot() {
-        return root;
     }
 
     void Display(int level, Node* ptr) {

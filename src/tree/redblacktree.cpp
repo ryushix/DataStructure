@@ -6,6 +6,8 @@ using namespace std;
 class Node {
 public:
     int Key;
+    bool Red;
+    Node* Parent;
     Node* Right;
     Node* Left;
 
@@ -14,6 +16,18 @@ public:
         Key = key;
         Right = nullptr;
         Left = nullptr;
+    }
+
+    int getKey() {
+        return Key;
+    }
+
+    void setParent(Node* parent) {
+        Parent = parent;
+    }
+
+    Node* getParent() {
+        return Parent;
     }
 
     void setRight(Node* right) {
@@ -32,13 +46,14 @@ public:
         return Left;
     }
 
-    int getKey() {
-        return Key;
+    void setRed(bool red) {
+        Red = red;
     }
 
-    Node* getRoot() {
-        return this;
+    bool isRed() {
+        return Red;
     }
+
 };
 
 class binarySearchTree {
@@ -76,15 +91,20 @@ public:
             cout << "Error: Key already exists" << endl;
             return false;
         }
+
         Node* newNode = new Node(key);
+        newNode->setRed(true);
+
         if (!root) {
             root = newNode;
+            root->setRed(false);
         } else {
             Node* current = root;
             while (true) {
                 if (key > current->getKey()) {
                     if (current->getRight() == nullptr) {
                         current->setRight(newNode);
+                        newNode->setParent(current);
                         break;
                     } else {
                         current = current->getRight();
@@ -92,13 +112,52 @@ public:
                 } else {
                     if (current->getLeft() == nullptr) {
                         current->setLeft(newNode);
+                        newNode->setParent(current);
                         break;
                     } else {
                         current = current->getLeft();
                     }
                 }
             }
+
+            while (newNode != root && newNode->getParent()->isRed()) {
+                if (newNode->getParent() == newNode->getParent()->getParent()->getLeft()) {
+                    Node* uncle = newNode->getParent()->getParent()->getRight();
+                    if (uncle != nullptr && uncle->isRed()) {
+                        newNode->getParent()->setRed(false);
+                        uncle->setRed(false);
+                        newNode->getParent()->getParent()->setRed(true);
+                        newNode = newNode->getParent()->getParent();
+                    } else {
+                        if (newNode == newNode->getParent()->getRight()) {
+                            newNode = newNode->getParent();
+                            rotateLeft(newNode);
+                        }
+                        newNode->getParent()->setRed(false);
+                        newNode->getParent()->getParent()->setRed(true);
+                        rotateRight(newNode->getParent()->getParent());
+                    }
+                } else {
+                    Node* uncle = newNode->getParent()->getParent()->getLeft();
+                    if (uncle != nullptr && uncle->isRed()) {
+                        newNode->getParent()->setRed(false);
+                        uncle->setRed(false);
+                        newNode->getParent()->getParent()->setRed(true);
+                        newNode = newNode->getParent()->getParent();
+                    } else {
+                        if (newNode == newNode->getParent()->getLeft()) {
+                            newNode = newNode->getParent();
+                            rotateRight(newNode);
+                        }
+                        newNode->getParent()->setRed(false);
+                        newNode->getParent()->getParent()->setRed(true);
+                        rotateLeft(newNode->getParent()->getParent());
+                    }
+                }
+            }
         }
+
+        root->setRed(false);
         return true;
     }
 
@@ -140,10 +199,6 @@ public:
         return current;
     }
 
-    Node* getRoot() {
-        return root;
-    }
-
     void Display(int level, Node* ptr) {
         int i;
         if (ptr != nullptr) {
@@ -155,10 +210,15 @@ public:
             for (i = 0; i < level && ptr != root; i++) {
                 cout << "        ";
             }
-            cout << ptr->getKey();
+            if (ptr->isRed()) {
+                cout << "\033[1;31m" << ptr->getKey() << "\033[0m"; // Merah
+            } else {
+                cout << ptr->getKey(); // Hitam
+            }
             Display(level + 1, ptr->getLeft());
         }
     }
+
 
     void printPreorder(Node* node) {
         if (node != nullptr) {
@@ -197,6 +257,46 @@ public:
     void printPostorder() {
         printPostorder(root);
         cout << endl;
+    }
+
+    void rotateRight(Node* node) {
+        Node* newParent = node->getLeft();
+        if (node->getParent() != nullptr) {
+            if (node == node->getParent()->getLeft()) {
+                node->getParent()->setLeft(newParent);
+            } else {
+                node->getParent()->setRight(newParent);
+            }
+        } else {
+            root = newParent;
+        }
+        newParent->setParent(node->getParent());
+        node->setLeft(newParent->getRight());
+        if (newParent->getRight() != nullptr) {
+            newParent->getRight()->setParent(node);
+        }
+        newParent->setRight(node);
+        node->setParent(newParent);
+    }
+
+    void rotateLeft(Node* node) {
+        Node* newParent = node->getRight();
+        if (node->getParent() != nullptr) {
+            if (node == node->getParent()->getLeft()) {
+                node->getParent()->setLeft(newParent);
+            } else {
+                node->getParent()->setRight(newParent);
+            }
+        } else {
+            root = newParent;
+        }
+        newParent->setParent(node->getParent());
+        node->setRight(newParent->getLeft());
+        if (newParent->getLeft() != nullptr) {
+            newParent->getLeft()->setParent(node);
+        }
+        newParent->setLeft(node);
+        node->setParent(newParent);
     }
 
 };
