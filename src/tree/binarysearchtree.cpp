@@ -73,6 +73,7 @@ public:
             return false;
         }
         Node* newNode = new Node(key);
+
         if (!root) {
             root = newNode;
         } else {
@@ -96,6 +97,14 @@ public:
             }
         }
         return true;
+    }
+
+    Node* minValueNode(Node* node) {
+        Node* current = node;
+        while (current->getLeft() != nullptr) {
+            current = current->getLeft();
+        }
+        return current;
     }
 
     bool remove(int key) {
@@ -126,14 +135,6 @@ public:
             node->setRight(remove(node->getRight(), temp->getKey()));
         }
         return node;
-    }
-
-    Node* minValueNode(Node* node) {
-        Node* current = node;
-        while (current->getLeft() != nullptr) {
-            current = current->getLeft();
-        }
-        return current;
     }
 
     void Display(int level, Node* ptr) {
