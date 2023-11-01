@@ -163,126 +163,126 @@ public:
         return true;
     }
 
-    Node* minValueNode(Node* node) {
-        Node* current = node;
-        while (current->getLeft() != nullptr) {
-            current = current->getLeft();
-        }
-        return current;
-    }
+    // Node* minValueNode(Node* node) {
+    //     Node* current = node;
+    //     while (current->getLeft() != nullptr) {
+    //         current = current->getLeft();
+    //     }
+    //     return current;
+    // }
 
-    bool remove(int key) {
-        if (!isExist(key)) {
-            cout << "Error: Key not found" << endl;
-            return false;
-        }
+    // bool remove(int key) {
+    //     if (!isExist(key)) {
+    //         cout << "Error: Key not found" << endl;
+    //         return false;
+    //     }
 
-        root = remove(root, key);
+    //     root = remove(root, key);
 
-        if (root != nullptr) {
-            root->setRed(false); // Pastikan akar tetap hitam setelah menghapus node
-        }
+    //     if (root != nullptr) {
+    //         root->setRed(false); // Pastikan akar tetap hitam setelah menghapus node
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
-    Node* remove(Node* node, int key) {
-        if (node == nullptr) {
-            return node;
-        }
+    // Node* remove(Node* node, int key) {
+    //     if (node == nullptr) {
+    //         return node;
+    //     }
 
-        if (key < node->getKey()) {
-            node->setLeft(remove(node->getLeft(), key));
-        } else if (key > node->getKey()) {
-            node->setRight(remove(node->getRight(), key));
-        } else {
-            if (node->getLeft() == nullptr) {
-                Node* temp = node->getRight();
-                delete node;
-                return temp;
-            } else if (node->getRight() == nullptr) {
-                Node* temp = node->getLeft();
-                delete node;
-                return temp;
-            }
-            Node* temp = minValueNode(node->getRight());
-            node->Key = temp->getKey();
-            node->setRight(remove(node->getRight(), temp->getKey()));
-        }
+    //     if (key < node->getKey()) {
+    //         node->setLeft(remove(node->getLeft(), key));
+    //     } else if (key > node->getKey()) {
+    //         node->setRight(remove(node->getRight(), key));
+    //     } else {
+    //         if (node->getLeft() == nullptr) {
+    //             Node* temp = node->getRight();
+    //             delete node;
+    //             return temp;
+    //         } else if (node->getRight() == nullptr) {
+    //             Node* temp = node->getLeft();
+    //             delete node;
+    //             return temp;
+    //         }
+    //         Node* temp = minValueNode(node->getRight());
+    //         node->Key = temp->getKey();
+    //         node->setRight(remove(node->getRight(), temp->getKey()));
+    //     }
 
-        // Lakukan pengecekan dan rotasi untuk menjaga Red-Black Tree
-        if (node->isRed()) {
-            return node; // Tidak perlu tindakan jika node itu merah
-        }
+    //     // Lakukan pengecekan dan rotasi untuk menjaga Red-Black Tree
+    //     if (node->isRed()) {
+    //         return node; // Tidak perlu tindakan jika node itu merah
+    //     }
 
-        if (node->getLeft() != nullptr && node->getLeft()->isRed()) {
-            if (node == node->getParent()->getLeft()) {
-                Node* sibling = node->getParent()->getRight();
-                if (sibling != nullptr && !sibling->isRed()) {
-                    // Kasus 1: Node hitam dengan sibling hitam
-                    sibling->setRed(true);
-                    node->getParent()->setRed(false);
-                    rotateRight(node->getParent());
-                    sibling = node->getParent()->getRight();
-                }
-                if ((sibling->getLeft() == nullptr || !sibling->getLeft()->isRed()) &&
-                    (sibling->getRight() == nullptr || !sibling->getRight()->isRed())) {
-                    // Kasus 2: Node hitam dengan sibling merah
-                    sibling->setRed(true);
-                    node = node->getParent();
-                } else {
-                    if (sibling->getRight() == nullptr || !sibling->getRight()->isRed()) {
-                        // Kasus 3: Node hitam dengan sibling hitam-merah
-                        sibling->getLeft()->setRed(false);
-                        sibling->setRed(true);
-                        rotateRight(sibling);
-                        sibling = node->getParent()->getRight();
-                    }
-                    // Kasus 4: Node hitam dengan sibling merah-merah
-                    sibling->setRed(node->getParent()->isRed());
-                    node->getParent()->setRed(false);
-                    sibling->getRight()->setRed(false);
-                    rotateLeft(node->getParent());
-                    node = root; // Selesai
-                }
-            }
-        } else {
-            if (node->getRight() != nullptr && node->getRight()->isRed()) {
-                if (node == node->getParent()->getRight()) {
-                    Node* sibling = node->getParent()->getLeft();
-                    if (sibling != nullptr && !sibling->isRed()) {
-                        // Kasus 1: Node hitam dengan sibling hitam
-                        sibling->setRed(true);
-                        node->getParent()->setRed(false);
-                        rotateLeft(node->getParent());
-                        sibling = node->getParent()->getLeft();
-                    }
-                    if ((sibling->getRight() == nullptr || !sibling->getRight()->isRed()) &&
-                        (sibling->getLeft() == nullptr || !sibling->getLeft()->isRed())) {
-                        // Kasus 2: Node hitam dengan sibling merah
-                        sibling->setRed(true);
-                        node = node->getParent();
-                    } else {
-                        if (sibling->getLeft() == nullptr || !sibling->getLeft()->isRed()) {
-                            // Kasus 3: Node hitam dengan sibling hitam-merah
-                            sibling->getRight()->setRed(false);
-                            sibling->setRed(true);
-                            rotateLeft(sibling);
-                            sibling = node->getParent()->getLeft();
-                        }
-                        // Kasus 4: Node hitam dengan sibling merah-merah
-                        sibling->setRed(node->getParent()->isRed());
-                        node->getParent()->setRed(false);
-                        sibling->getLeft()->setRed(false);
-                        rotateRight(node->getParent());
-                        node = root; // Selesai
-                    }
-                }
-            }
-        }
+    //     if (node->getLeft() != nullptr && node->getLeft()->isRed()) {
+    //         if (node == node->getParent()->getLeft()) {
+    //             Node* sibling = node->getParent()->getRight();
+    //             if (sibling != nullptr && !sibling->isRed()) {
+    //                 // Kasus 1: Node hitam dengan sibling hitam
+    //                 sibling->setRed(true);
+    //                 node->getParent()->setRed(false);
+    //                 rotateRight(node->getParent());
+    //                 sibling = node->getParent()->getRight();
+    //             }
+    //             if ((sibling->getLeft() == nullptr || !sibling->getLeft()->isRed()) &&
+    //                 (sibling->getRight() == nullptr || !sibling->getRight()->isRed())) {
+    //                 // Kasus 2: Node hitam dengan sibling merah
+    //                 sibling->setRed(true);
+    //                 node = node->getParent();
+    //             } else {
+    //                 if (sibling->getRight() == nullptr || !sibling->getRight()->isRed()) {
+    //                     // Kasus 3: Node hitam dengan sibling hitam-merah
+    //                     sibling->getLeft()->setRed(false);
+    //                     sibling->setRed(true);
+    //                     rotateRight(sibling);
+    //                     sibling = node->getParent()->getRight();
+    //                 }
+    //                 // Kasus 4: Node hitam dengan sibling merah-merah
+    //                 sibling->setRed(node->getParent()->isRed());
+    //                 node->getParent()->setRed(false);
+    //                 sibling->getRight()->setRed(false);
+    //                 rotateLeft(node->getParent());
+    //                 node = root; // Selesai
+    //             }
+    //         }
+    //     } else {
+    //         if (node->getRight() != nullptr && node->getRight()->isRed()) {
+    //             if (node == node->getParent()->getRight()) {
+    //                 Node* sibling = node->getParent()->getLeft();
+    //                 if (sibling != nullptr && !sibling->isRed()) {
+    //                     // Kasus 1: Node hitam dengan sibling hitam
+    //                     sibling->setRed(true);
+    //                     node->getParent()->setRed(false);
+    //                     rotateLeft(node->getParent());
+    //                     sibling = node->getParent()->getLeft();
+    //                 }
+    //                 if ((sibling->getRight() == nullptr || !sibling->getRight()->isRed()) &&
+    //                     (sibling->getLeft() == nullptr || !sibling->getLeft()->isRed())) {
+    //                     // Kasus 2: Node hitam dengan sibling merah
+    //                     sibling->setRed(true);
+    //                     node = node->getParent();
+    //                 } else {
+    //                     if (sibling->getLeft() == nullptr || !sibling->getLeft()->isRed()) {
+    //                         // Kasus 3: Node hitam dengan sibling hitam-merah
+    //                         sibling->getRight()->setRed(false);
+    //                         sibling->setRed(true);
+    //                         rotateLeft(sibling);
+    //                         sibling = node->getParent()->getLeft();
+    //                     }
+    //                     // Kasus 4: Node hitam dengan sibling merah-merah
+    //                     sibling->setRed(node->getParent()->isRed());
+    //                     node->getParent()->setRed(false);
+    //                     sibling->getLeft()->setRed(false);
+    //                     rotateRight(node->getParent());
+    //                     node = root; // Selesai
+    //                 }
+    //             }
+    //         }
+    //     }
 
-        return node;
-    }
+    //     return node;
+    // }
 
 
     void Display(int level, Node* ptr) {
@@ -394,7 +394,7 @@ int main() {
     while (true) {
         cout << "\nMenu:" << endl;
         cout << "1. Tambahkan kunci" << endl;
-        cout << "2. Hapus kunci" << endl;
+        // cout << "2. Hapus kunci" << endl;
         cout << "3. Cek keberadaan kunci" << endl;
         cout << "4. Print preOrder" << endl;
         cout << "5. Print inOrder" << endl;
@@ -412,14 +412,14 @@ int main() {
                 }
                 bst.Display();
                 break;
-            case 2:
-                cout << "Masukkan kunci yang akan dihapus: ";
-                cin >> key;
-                if (bst.remove(key)) {
-                    cout << "Kunci " << key << " berhasil dihapus." << endl;
-                }
-                bst.Display();
-                break;
+            // case 2:
+            //     cout << "Masukkan kunci yang akan dihapus: ";
+            //     cin >> key;
+            //     if (bst.remove(key)) {
+            //         cout << "Kunci " << key << " berhasil dihapus." << endl;
+            //     }
+            //     bst.Display();
+            //     break;
             case 3:
                 cout << "Masukkan kunci yang akan dicek: ";
                 cin >> key;
